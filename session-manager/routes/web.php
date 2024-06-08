@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Session;
 use Illuminate\Auth\Events\Verified;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\EmployeeController;
 
 Route::get('/', function () {
     $sessions = Session::all();
@@ -27,5 +29,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('sessions', SessionController::class);
 });
 
+
+Route::get('attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+Route::get('attendance/create', [AttendanceController::class, 'create'])->name('attendance.create');
+Route::post('attendance', [AttendanceController::class, 'store'])->name('attendance.store');
+
+Route::resource('employees', EmployeeController::class);
 
 require __DIR__.'/auth.php';
