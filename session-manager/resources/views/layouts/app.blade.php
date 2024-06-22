@@ -48,12 +48,17 @@
                         @else
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('employees.index') }}">Employees</a>
+                                <a class="nav-link" href="{{ route('employees.index') }}">کارمندان</a>
                             </li>
                         </ul>
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('attendance.index') }}">Attendance</a>
+                                <a class="nav-link" href="{{ route('attendance.index') }}">حضور و غیاب</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('tickets.index') }}">پشتیبانی</a>
                             </li>
                         </ul>
                             <li class="nav-item dropdown">
