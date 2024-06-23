@@ -7,6 +7,8 @@ use Illuminate\Auth\Events\Verified;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\AccountingBookController;
 
 Route::get('/', function () {
     $sessions = Session::all();
@@ -47,5 +49,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/tickets/{id}/close', [TicketController::class, 'close'])->name('tickets.close');
 });
 
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('accounting_books', AccountingBookController::class);
+    Route::get('accounting_books/{book}/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
+    Route::post('accounting_books/{book}/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+});
 
 require __DIR__.'/auth.php';
