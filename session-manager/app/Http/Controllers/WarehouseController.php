@@ -35,7 +35,7 @@ class WarehouseController extends Controller
 
     public function show($id)
     {
-        $warehouse = Warehouse::with('items')->where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $warehouse = Warehouse::with(['items.movements'])->where('id', $id)->where('user_id', Auth::id())->firstOrFail();
         return view('warehouses.show', compact('warehouse'));
     }
 }

@@ -63,8 +63,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('warehouses', WarehouseController::class);
     Route::get('warehouses/{warehouse}/items/create', [ItemController::class, 'create'])->name('items.create');
     Route::post('warehouses/{warehouse}/items', [ItemController::class, 'store'])->name('items.store');
+    Route::get('warehouses/{warehouse}/items/{item}/edit', [ItemController::class, 'edit'])->name('items.edit');
+    Route::put('warehouses/{warehouse}/items/{item}', [ItemController::class, 'update'])->name('items.update');
+    Route::delete('warehouses/{warehouse}/items/{item}', [ItemController::class, 'destroy'])->name('items.destroy');
     Route::get('items/{item}/inventory_movements/create', [InventoryMovementController::class, 'create'])->name('inventory_movements.create');
     Route::post('items/{item}/inventory_movements', [InventoryMovementController::class, 'store'])->name('inventory_movements.store');
 });
-
 require __DIR__.'/auth.php';
