@@ -9,6 +9,9 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\AccountingBookController;
+use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\InventoryMovementController;
 
 Route::get('/', function () {
     $sessions = Session::all();
@@ -32,13 +35,13 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('sessions', SessionController::class);
 });
 
-
+Route::group(['middelware' => ['auth']], function () {
 Route::get('attendance', [AttendanceController::class, 'index'])->name('attendance.index');
 Route::get('attendance/create', [AttendanceController::class, 'create'])->name('attendance.create');
 Route::post('attendance', [AttendanceController::class, 'store'])->name('attendance.store');
 
 Route::resource('employees', EmployeeController::class);
-
+});
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
@@ -53,6 +56,15 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('accounting_books', AccountingBookController::class);
     Route::get('accounting_books/{book}/transactions/create', [TransactionController::class, 'create'])->name('transactions.create');
     Route::post('accounting_books/{book}/transactions', [TransactionController::class, 'store'])->name('transactions.store');
+});
+
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('warehouses', WarehouseController::class);
+    Route::get('warehouses/{warehouse}/items/create', [ItemController::class, 'create'])->name('items.create');
+    Route::post('warehouses/{warehouse}/items', [ItemController::class, 'store'])->name('items.store');
+    Route::get('items/{item}/inventory_movements/create', [InventoryMovementController::class, 'create'])->name('inventory_movements.create');
+    Route::post('items/{item}/inventory_movements', [InventoryMovementController::class, 'store'])->name('inventory_movements.store');
 });
 
 require __DIR__.'/auth.php';

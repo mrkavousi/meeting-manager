@@ -66,6 +66,11 @@
                                 <a class="nav-link" href="{{ route('accounting_books.index') }}">حسابداری</a>
                             </li>
                         </ul>
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('warehouses.index') }}">انبارداری</a>
+                            </li>
+                        </ul>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
