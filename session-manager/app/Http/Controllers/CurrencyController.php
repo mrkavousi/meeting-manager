@@ -2,20 +2,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use GuzzleHttp\Client;
 
 class CurrencyController extends Controller
 {
     public function index()
     {
         $apiUrl = 'http://nerkh-api.ir/api/323236b91792b20fe615a4ada4b68463/currency/';
-        $response = Http::withOptions([
-            'debug' => false,
-            'verify' => false,
-        ]) -> get($apiUrl);
-        // $response = Http::get($apiUrl);
-        $data = $response->json();
 
-        return view('currencies.index', ['prices' => $data['data']['prices']]);
+        $client = new Client([
+            'verify' => true,
+            'debug' => false,
+        ]);
+
+        try {
+            $response = $client->request('GET', $apiUrl);
+            $data = json_decode($response->getBody(), true);
+
+            if ($response->getStatusCode() == 200 && isset($data['data']['prices'])) {
+                return view('currencies.index', ['prices' => $data['data']['prices']]);
+            } else {
+                return view('currencies.index', ['prices' => []])
+                       ->with('error', 'Unable to fetch currency prices.');
+            }
+        } catch (\Exception $e) {
+            return view('currencies.index', ['prices' => []])
+                   ->with('error', 'Error fetching currency prices: ' . $e->getMessage());
+        }
     }
 }
