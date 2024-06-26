@@ -9,9 +9,11 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\AccountingBookController;
+use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\InventoryMovementController;
+
 
 Route::get('/', function () {
     $sessions = Session::all();
@@ -69,4 +71,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('items/{item}/inventory_movements/create', [InventoryMovementController::class, 'create'])->name('inventory_movements.create');
     Route::post('items/{item}/inventory_movements', [InventoryMovementController::class, 'store'])->name('inventory_movements.store');
 });
+
+
+Route::get('/currencies', [CurrencyController::class, 'index'])->name('currencies.index');
+
 require __DIR__.'/auth.php';
