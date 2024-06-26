@@ -2,23 +2,23 @@
 
 @section('content')
 <div class="container">
-    <h1>Currency Prices</h1>
+    <h1>نرخ به لحظه ارزها</h1>
     <table class="table">
         <thead>
             <tr>
-                <th>Currency</th>
-                <th>Min Price</th>
-                <th>Max Price</th>
-                <th>Current Price</th>
+                <th>ارز</th>
+                <th>پایین ترین قیمت</th>
+                <th>بالاترین قیمت</th>
+                <th>قیمت فعلی</th>
             </tr>
         </thead>
         <tbody>
             @foreach($prices as $currency => $price)
             <tr>
                 <td>{{ $currency }}</td>
-                <td>{{ number_format($price['min'], 2) }}</td>
-                <td>{{ number_format($price['max'], 2) }}</td>
-                <td>{{ number_format($price['current'], 2) }}</td>
+                <td>{{ number_format($price['min']/10, 0) }}</td>
+                <td>{{ number_format($price['max']/10, 0) }}</td>
+                <td>{{ number_format($price['current']/10, 0) }}</td>
             </tr>
             @endforeach
         </tbody>

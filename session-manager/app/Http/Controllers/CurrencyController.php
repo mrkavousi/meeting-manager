@@ -11,7 +11,7 @@ class CurrencyController extends Controller
         $apiUrl = 'http://nerkh-api.ir/api/323236b91792b20fe615a4ada4b68463/currency/';
 
         $client = new Client([
-            'verify' => true,
+            'verify' => false,
             'debug' => false,
         ]);
 
@@ -20,7 +20,15 @@ class CurrencyController extends Controller
             $data = json_decode($response->getBody(), true);
 
             if ($response->getStatusCode() == 200 && isset($data['data']['prices'])) {
-                return view('currencies.index', ['prices' => $data['data']['prices']]);
+                $prices = $data['data']['prices'];
+
+                // ترجمه نام ارزها
+                $translatedPrices = [];
+                foreach ($prices as $currency => $price) {
+                    $translatedPrices[config('currency.' . $currency, $currency)] = $price;
+                }
+
+                return view('currencies.index', ['prices' => $translatedPrices]);
             } else {
                 return view('currencies.index', ['prices' => []])
                        ->with('error', 'Unable to fetch currency prices.');
