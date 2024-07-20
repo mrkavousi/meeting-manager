@@ -13,6 +13,9 @@ use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\InventoryMovementController;
+use App\Http\Controllers\TelegramController;
+
+
 
 
 Route::get('/', function () {
@@ -76,3 +79,5 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/currencies', [CurrencyController::class, 'index'])->name('currencies.index');
 
 require __DIR__.'/auth.php';
+
+Route::post('/telegram/webhook', [TelegramController::class, 'handleWebhook']);
